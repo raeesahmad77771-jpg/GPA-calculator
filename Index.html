@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPA & CGPA Calculator - SBBU Sheringal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00e0ff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    input, select {
+      padding: 8px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #00e0ff;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00b3cc;
+    }
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 0.9em;
+      }
+      header {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>SHAHEED BENAZIR BHUTTO UNIVERSITY - GPA & CGPA CALCULATOR</header>
+
+  <div class="container">
+    <h2>GPA Calculator (Based on 50 or 100 Marks)</h2>
+
+    <table id="marksTable">
+      <tr>
+        <th>Subject</th>
+        <th>Marks (out of)</th>
+        <th>Obtained Marks</th>
+        <th>Credit Hours</th>
+      </tr>
+      <tr>
+        <td>Subject 1</td>
+        <td>
+          <select class="totalMarks">
+            <option value="100">100</option>
+            <option value="50">50</option>
+          </select>
+        </td>
+        <td><input type="number" class="obtMarks" min="0" /></td>
+        <td><input type="number" class="creditHours" min="1" /></td>
+      </tr>
+    </table>
+
+    <button onclick="addRow()">Add Subject</button>
+    <button onclick="calculateGPA()">Calculate GPA</button>
+
+    <div class="result" id="gpaResult"></div>
+
+    <h2>CGPA Calculator</h2>
+    <table>
+      <tr>
+        <th>Previous CGPA</th>
+        <td><input type="number" id="prevCgpa" step="0.01" min="0" max="4" /></td>
+      </tr>
+      <tr>
+        <th>Completed Credit Hours</th>
+        <td><input type="number" id="prevCredits" min="1" /></td>
+      </tr>
+      <tr>
+        <th>Current Semester GPA</th>
+        <td><input type="number" id="currentGpa" step="0.01" min="0" max="4" /></td>
+      </tr>
+      <tr>
+        <th>Current Semester Credit Hours</th>
+        <td><input type="number" id="currentCredits" min="1" /></td>
+      </tr>
+    </table>
+    <button onclick="calculateCGPA()">Calculate CGPA</button>
+    <div class="result" id="cgpaResult"></div>
+  </div>
+
+  <script>
+    function addRow() {
+      const table = document.getElementById("marksTable");
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>Subject ${table.rows.length - 1}</td>
+        <td>
+          <select class="totalMarks">
+            <option value="100">100</option>
+            <option value="50">50</option>
+          </select>
+        </td>
+        <td><input type="number" class="obtMarks" min="0" /></td>
+        <td><input type="number" class="creditHours" min="1" /></td>
+      `;
+    }
+
+    function marksToGPA(marks) {
+      if (marks >= 85) return 4.0;
+      if (marks === 84) return 3.9;
+      if (marks === 83) return 3.8;
+      if (marks === 82) return 3.7;
+      if (marks === 81) return 3.6;
+      if (marks === 80) return 3.5;
+      if (marks >= 78) return 3.4;
+      if (marks === 77) return 3.3;
+      if (marks === 76) return 3.3;
+      if (marks === 75) return 3.2;
+      if (marks === 74) return 3.2;
+      if (marks === 73) return 3.1;
+      if (marks === 72) return 3.0;
+      if (marks === 71) return 2.9;
+      if (marks === 70) return 2.8;
+      if (marks === 69) return 2.7;
+      if (marks === 68) return 2.6;
+      if (marks === 67) return 2.5;
+      if (marks === 66) return 2.5;
+      if (marks === 65) return 2.4;
+      if (marks === 64) return 2.4;
+      if (marks === 63) return 2.3;
+      if (marks === 62) return 2.2;
+      if (marks === 61) return 2.1;
+      if (marks === 60) return 2.0;
+      if (marks === 59) return 1.9;
+      if (marks === 58) return 1.8;
+      if (marks === 57) return 1.7;
+      if (marks === 56) return 1.6;
+      if (marks === 55) return 1.5;
+      if (marks === 54) return 1.4;
+      if (marks === 53) return 1.3;
+      if (marks === 52) return 1.2;
+      if (marks === 51) return 1.1;
+      if (marks === 50) return 1.0;
+      return 0.0;
+    }
+
+    function calculateGPA() {
+      const rows = document.querySelectorAll("#marksTable tr");
+      let totalPoints = 0, totalCredits = 0;
+
+      rows.forEach((row, i) => {
+        if (i === 0) return;
+        const total = parseFloat(row.querySelector(".totalMarks").value);
+        const obtained = parseFloat(row.querySelector(".obtMarks").value);
+        const credit = parseFloat(row.querySelector(".creditHours").value);
+
+        if (isNaN(total) || isNaN(obtained) || isNaN(credit)) return;
+
+        const percentage = (obtained / total) * 100;
+        const gpa = marksToGPA(Math.round(percentage));
+        totalPoints += gpa * credit;
+        totalCredits += credit;
+      });
+
+      const gpa = totalPoints / totalCredits;
+      document.getElementById("gpaResult").innerHTML = `
+        <p><b>Current Semester GPA:</b> ${gpa.toFixed(2)}</p>
+      `;
+    }
+
+    function calculateCGPA() {
+      const prevCgpa = parseFloat(document.getElementById("prevCgpa").value);
+      const prevCredits = parseFloat(document.getElementById("prevCredits").value);
+      const currentGpa = parseFloat(document.getElementById("currentGpa").value);
+      const currentCredits = parseFloat(document.getElementById("currentCredits").value);
+
+      if (isNaN(prevCgpa) || isNaN(prevCredits) || isNaN(currentGpa) || isNaN(currentCredits)) {
+        alert("Please fill all CGPA fields");
+        return;
+      }
+
+      const totalPoints = (prevCgpa * prevCredits) + (currentGpa * currentCredits);
+      const totalCredits = prevCredits + currentCredits;
+      const cgpa = totalPoints / totalCredits;
+
+      document.getElementById("cgpaResult").innerHTML = `
+        <p><b>Updated CGPA:</b> ${cgpa.toFixed(2)}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
